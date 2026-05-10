@@ -1,6 +1,6 @@
 # Mã nguồn chuẩn (Coding Conventions)
 
-Dự án `SmartAttend` hướng đến độ ổn định, khả năng bảo trì và có thể bàn giao thương mại (Client-ready). Mọi đoạn code được viết ra phải tuân thủ nghiêm ngặt các tiêu chuẩn sau:
+Dự án `PyWarehouse` hướng đến độ ổn định, khả năng bảo trì và có thể bàn giao thương mại (Client-ready). Mọi đoạn code được viết ra phải tuân thủ nghiêm ngặt các tiêu chuẩn sau:
 
 ## 1. Naming Conventions (Quy chuẩn Đặt tên)
 Áp dụng tiêu chuẩn **PEP 8**:

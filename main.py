@@ -1,34 +1,38 @@
-"""
-main.py
-=======
-Khởi chạy ứng dụng "SmartAttend".
-Thiết kế theo mô hình MVC sử dụng modules (không dùng class).
+import tkinter as tk
+import models.kho_hang as model
+import views.giao_dien_gui as view
+import controllers.dieu_khien_gui as controller
 
-Phase 1: Giao diện CLI (Command Line Interface)
-Phase 2: Nâng cấp lên GUI (Tkinter) — chỉ thay View + Controller, giữ nguyên Model.
-"""
-
-import sys
-from utils.logger import setup_logger
-
+# Phiên bản của ứng dụng (Semantic Versioning)
 __version__ = "1.0.0"
-logger = setup_logger("main")
 
-# Ép console sử dụng UTF-8 khi chạy file .exe để tránh lỗi UnicodeEncodeError
-if sys.stdout and hasattr(sys.stdout, 'reconfigure'):
-    sys.stdout.reconfigure(encoding='utf-8')
-if sys.stderr and hasattr(sys.stderr, 'reconfigure'):
-    sys.stderr.reconfigure(encoding='utf-8')
-
-from controllers import gui_controller
-from controllers import cli_controller
-
-if __name__ == "__main__":
-    logger.info(f"=== Khởi chạy SmartAttend v{__version__} (Chế độ mặc định) ===")
+def main():
+    """
+    Hàm khởi chạy chính của ứng dụng PyWarehouse.
+    Thực hiện theo các bước của kiến trúc MVC.
+    """
     
-    if len(sys.argv) > 1 and sys.argv[1] == '--cli':
-        logger.info("Chuyển sang giao diện dòng lệnh (CLI) qua tham số.")
-        cli_controller.chay_ung_dung()
-    else:
-        logger.info("Khởi động giao diện đồ hoạ (GUI).")
-        gui_controller.chay_ung_dung()
+    # 1. KHỞI TẠO DỮ LIỆU (MODEL)
+    # Tạo file CSV và thư mục cần thiết nếu chưa tồn tại
+    model.khoi_tao_csv()
+    
+    # 2. KHỞI TẠO GIAO DIỆN (VIEW)
+    # Tạo cửa sổ gốc của Tkinter
+    root = tk.Tk()
+    
+    # Gọi hàm xây dựng giao diện từ View
+    cac_widgets = view.tao_giao_dien_chinh(root)
+    
+    # 3. KẾT NỐI ĐIỀU KHIỂN (CONTROLLER)
+    # Gắn các logic xử lý dữ liệu vào các nút bấm trên giao diện
+    controller.khoi_tao_dieu_khien(cac_widgets)
+    
+    # Hiển thị thông tin phiên bản ở tiêu đề hoặc log
+    print(f"PyWarehouse v{__version__} đang khởi chạy...")
+    
+    # Bắt đầu vòng lặp sự kiện của GUI
+    root.mainloop()
+
+# Điểm bắt đầu của chương trình Python
+if __name__ == "__main__":
+    main()
