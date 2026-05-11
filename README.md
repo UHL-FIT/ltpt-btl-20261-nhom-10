@@ -4,8 +4,8 @@
 ![Pandas](https://img.shields.io/badge/Pandas-3.0.2-150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/numpy-2.4.4-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
 ![Windows](https://img.shields.io/badge/dành_cho-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
-![Version](https://img.shields.io/badge/phiên_bản_hiện_tại-v1.0.0-blue?style=for-the-badge)
-![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge)
+![Version](https://img.shields.io/badge/phiên_bản_hiện_tại-v1.0.0-7303fc?style=for-the-badge)
+![License: GPL v3](https://img.shields.io/badge/License-GPLv3-green.svg?style=for-the-badge)
 #
 
 PyWarehouse là một ứng dụng Python chuyên dụng dành cho các cửa hàng vừa và nhỏ, giúp quản lý thông tin hàng hóa, theo dõi tồn kho, tính toán lợi nhuận dự kiến và đưa ra các cảnh báo nhập hàng một cách trực quan và khoa học.
@@ -92,4 +92,4 @@ Kết quả sẽ nằm trong thư mục `dist/`.
 ## Khác
 [![Star History Chart](https://api.star-history.com/chart?repos=ltpt-btl-20261-nhom-10/ltpt-btl-20261-nhom-10&type=date&legend=top-left)](https://www.star-history.com/?repos=Nhom10%2FPyWarehouse&type=date&legend=top-left)
 
-***Revision 1.2***
+***Revision 1.4***
