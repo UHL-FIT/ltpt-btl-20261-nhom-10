@@ -8,31 +8,33 @@ __version__ = "1.0.0"
 
 def main():
     """
-    Hàm khởi chạy chính của ứng dụng PyWarehouse.
-    Thực hiện theo các bước của kiến trúc MVC.
+    Hàm khởi chạy chính (Entry Point) của ứng dụng PyWarehouse.
+
+    Thực hiện quy trình khởi tạo 3 bước theo kiến trúc MVC:
+    1. Model: Khởi tạo dữ liệu và cấu trúc file CSV.
+    2. View: Xây dựng các thành phần giao diện đồ họa.
+    3. Controller: Kết nối logic xử lý vào các thành phần giao diện.
     """
     
     # 1. KHỞI TẠO DỮ LIỆU (MODEL)
-    # Tạo file CSV và thư mục cần thiết nếu chưa tồn tại
+    # Đảm bảo file CSV và các thư mục cần thiết đã sẵn sàng
     model.khoi_tao_csv()
     
     # 2. KHỞI TẠO GIAO DIỆN (VIEW)
-    # Tạo cửa sổ gốc của Tkinter
+    # Tạo cửa sổ gốc Tkinter và thiết lập các Widget
     root = tk.Tk()
-    
-    # Gọi hàm xây dựng giao diện từ View
     cac_widgets = view.tao_giao_dien_chinh(root)
     
     # 3. KẾT NỐI ĐIỀU KHIỂN (CONTROLLER)
-    # Gắn các logic xử lý dữ liệu vào các nút bấm trên giao diện
+    # Gắn logic nghiệp vụ vào các sự kiện trên giao diện
     controller.khoi_tao_dieu_khien(cac_widgets)
     
-    # Hiển thị thông tin phiên bản ở tiêu đề hoặc log
+    # Hiển thị thông báo khởi chạy trong Console để debug
     print(f"PyWarehouse v{__version__} đang khởi chạy...")
     
-    # Bắt đầu vòng lặp sự kiện của GUI
+    # Bắt đầu vòng lặp sự kiện chính của ứng dụng
     root.mainloop()
 
-# Điểm bắt đầu của chương trình Python
+# Điểm bắt đầu thực thi của chương trình Python
 if __name__ == "__main__":
     main()

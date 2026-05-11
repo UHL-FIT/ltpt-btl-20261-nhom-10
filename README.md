@@ -1,41 +1,85 @@
-# PyWarehouse - Phần Mềm Quản Lý Kho Hàng (MVC)
+# PyWarehouse - Phần Mềm Quản Lý Kho Hàng (Kiến Trúc MVC)
 
-PyWarehouse là một ứng dụng Python chuyên dụng giúp quản lý hàng hóa trong kho, theo dõi số lượng tồn kho, tính toán lợi nhuận và đưa ra các cảnh báo nhập hàng một cách trực quan, sử dụng kiến trúc MVC.
+PyWarehouse là một ứng dụng Python chuyên dụng dành cho các cửa hàng vừa và nhỏ, giúp quản lý thông tin hàng hóa, theo dõi tồn kho, tính toán lợi nhuận dự kiến và đưa ra các cảnh báo nhập hàng một cách trực quan và khoa học.
 
-## Tính năng nổi bật
-1. **Kiến trúc MVC chuẩn**: Tách biệt rõ ràng giữa Dữ liệu (Model), Giao diện (View) và Điều khiển (Controller).
-2. **Quản lý Hàng hóa**: Thêm, Sửa, Xoá, và Tìm kiếm sản phẩm theo Mã SKU hoặc Tên sản phẩm.
-3. **Xử lý Dữ liệu mạnh mẽ**: Sử dụng Pandas và Numpy để tính toán giá trị kho, lợi nhuận gộp và thống kê hàng tồn.
-4. **Cảnh báo Thông minh**: Tự động cảnh báo các sản phẩm có số lượng dưới ngưỡng tối thiểu (Min Stock).
-5. **Giao diện thân thiện**: Xây dựng bằng Tkinter với khả năng tự động co giãn (Auto-resize) và icon trực quan.
-6. **Nhập/Xuất Dữ liệu**: Hỗ trợ Import và Export qua file `.csv` hàng loạt.
+Dự án được xây dựng dựa trên kiến trúc **MVC (Model-View-Controller)** chuẩn mực, sử dụng thư viện mạnh mẽ như **Pandas** và **Numpy** để xử lý dữ liệu.
 
-## Cấu trúc Dự án
-```
+## 🚀 Tính năng nổi bật
+1. **Kiến trúc MVC**: Tách biệt hoàn toàn Logic dữ liệu, Giao diện và Bộ điều phối, giúp mã nguồn dễ bảo trì và mở rộng.
+2. **Quản lý Sản phẩm chuyên sâu**: Thêm, Sửa, Xoá, và Tìm kiếm nhanh chóng theo SKU hoặc Tên.
+3. **Phân tích Dữ liệu thông minh**:
+   - Sử dụng **Pandas/Numpy** tính toán Tổng vốn và Lợi nhuận tức thời.
+   - Thống kê lợi nhuận trung bình theo từng nhóm sản phẩm (Phân loại).
+4. **Cảnh báo Tồn kho**: Tự động dán nhãn màu đỏ cho các mặt hàng có số lượng dưới ngưỡng tối thiểu (Min Stock).
+5. **Giao diện hiện đại**: Xây dựng bằng Tkinter, hỗ trợ **Auto-resize** linh hoạt khi thay đổi kích thước cửa sổ.
+6. **Xử lý tệp tin**: Nhập (Import) và Xuất (Export) dữ liệu hàng loạt qua định dạng CSV chuẩn Excel.
+7. **Đa luồng (Multi-threading)**: Tác vụ Import file lớn được xử lý ngầm, không gây treo giao diện người dùng.
+
+## 📁 Cấu trúc Dự án
+```text
 PyWarehouse/
-├── assets/                  # Icon và tài nguyên ảnh
-├── controllers/             # Logic điều khiển (dieu_khien_gui.py, dieu_khien_cli.py)
-├── data/                    # Cơ sở dữ liệu CSV (kho_hang.csv)
-├── models/                  # Xử lý dữ liệu với Pandas/Numpy (kho_hang.py)
-├── templates/               # Mẫu CSV để nhập liệu (mau_kho_hang.csv)
-├── utils/                   # Tiện ích ghi log (logger.py)
-├── views/                   # Giao diện người dùng (giao_dien_gui.py, giao_dien_cli.py)
-├── main.py                  # Điểm khởi chạy ứng dụng
-├── requirements.txt         # Các thư viện cần thiết (pandas, numpy, tkinter)
-├── README.md                # Hướng dẫn sử dụng tổng quan
-├── CONVENTIONS.md           # Quy chuẩn viết code
+├── assets/                  # Tài nguyên (Icon, ảnh ứng dụng)
+├── controllers/             # Layer Controller: Điều phối luồng dữ liệu (dieu_khien_gui.py)
+├── data/                    # Nơi lưu trữ cơ sở dữ liệu (kho_hang.csv) và logs
+├── models/                  # Layer Model: Xử lý logic nghiệp vụ và tính toán (kho_hang.py)
+├── templates/               # Mẫu file CSV để người dùng nhập liệu (mau_kho_hang.csv)
+├── utils/                   # Tiện ích bổ trợ (logger.py)
+├── views/                   # Layer View: Xây dựng giao diện người dùng (giao_dien_gui.py)
+├── tests/                   # Bộ kiểm thử tự động (test_kho_hang.py)
+├── main.py                  # Điểm khởi chạy (Entry Point) của ứng dụng
+├── README.md                # Hướng dẫn sử dụng và giới thiệu tổng quan
+├── CONVENTIONS.md           # Quy chuẩn viết mã và tài liệu
 ├── SRS.md                   # Đặc tả yêu cầu hệ thống
-└── SAD.md                   # Tài liệu thiết kế kiến trúc
+└── SAD.md                   # Tài liệu thiết kế kiến trúc phần mềm
 ```
 
-## Hướng dẫn cài đặt
+## 🛠️ Hướng dẫn cài đặt dành cho Developer
 
-1. **Cài đặt môi trường**: Chạy file `setup_env.bat` để tạo môi trường ảo và cài đặt thư viện.
-2. **Chạy ứng dụng**: 
-   - Mở terminal, kích hoạt môi trường ảo: `.venv\Scripts\activate`
-   - Chạy lệnh: `python main.py`
-3. **Đóng gói**: Chạy `build.bat` để tạo file `.exe`.
+Thực hiện các bước sau để thiết lập môi trường chạy mã nguồn trên máy tính của bạn:
 
-## Tác giả
-* **Nhóm phát triển PyWarehouse**
-* Dự án cuối kỳ môn Lập trình Python.
+### 1. Tải mã nguồn (Clone Repository)
+Mở terminal (hoặc Git Bash) và chạy lệnh:
+```bash
+git clone <url_cua_repo_classroom>
+cd BTL
+```
+
+### 2. Khởi tạo môi trường ảo (Virtual Environment)
+Để tránh xung đột thư viện giữa các dự án, bạn nên sử dụng môi trường ảo.
+- **Cách 1 (Tự động trên Windows)**: Chạy file script được cung cấp sẵn:
+  ```bash
+  .\setup_env.bat
+  ```
+- **Cách 2 (Thủ công)**:
+  ```bash
+  python -m venv .venv
+  .venv\Scripts\activate
+  pip install -r requirements.txt
+  ```
+
+### 3. Khởi chạy ứng dụng
+Sau khi đã kích hoạt môi trường ảo, chạy lệnh:
+```bash
+python main.py
+```
+
+### 4. Chạy kiểm thử (Unit Tests)
+Để đảm bảo logic tính toán của Model vẫn hoạt động đúng sau khi bạn sửa code, hãy chạy:
+```bash
+.\run_tests.bat
+```
+
+### 5. Đóng gói ứng dụng thành file .exe
+Nếu bạn muốn chia sẻ ứng dụng cho người khác mà không cần cài đặt Python, hãy chạy:
+```bash
+.\build.bat
+```
+Kết quả sẽ nằm trong thư mục `dist/PyWarehouse.exe`.
+
+## 📝 Quy chuẩn viết mã
+Mọi thay đổi trên mã nguồn cần tuân thủ nghiêm ngặt file **CONVENTIONS.md** để đảm bảo tính đồng nhất cho toàn dự án (Naming, Docstrings, Logging).
+
+## 👥 Tác giả
+* **Nhóm 2 (TT02A) - PyWarehouse**
+* Thành viên: [Tên thành viên 1], [Tên thành viên 2], ...
+* Trường Đại học Hạ Long (UHL).
