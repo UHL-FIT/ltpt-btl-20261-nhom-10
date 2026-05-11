@@ -5,7 +5,7 @@
 ![NumPy](https://img.shields.io/badge/numpy-2.4.4-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
 ![Windows](https://img.shields.io/badge/dành_cho-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![Version](https://img.shields.io/badge/phiên_bản_hiện_tại-v1.0.0-blue?style=for-the-badge)
-![License](https://img.shields.io/github/license/UHL-FIT/ltpt-btl-20261-nhom-10?style=for-the-badge)
+![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge)
 #
 
 PyWarehouse là một ứng dụng Python chuyên dụng dành cho các cửa hàng vừa và nhỏ, giúp quản lý thông tin hàng hóa, theo dõi tồn kho, tính toán lợi nhuận dự kiến và đưa ra các cảnh báo nhập hàng một cách trực quan và khoa học.
