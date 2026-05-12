@@ -16,7 +16,7 @@ def tao_giao_dien_chinh(root):
         dict: Chứa các tham chiếu tới các widget chính (nút, bảng, ô nhập liệu...).
     """
     # ─── PHẦN 1: CẤU HÌNH CỬA SỔ ─────────────────────────────────────
-    root.title("PyWarehouse - Quản Lý Kho Hàng MVC")
+    root.title("PyWarehouse - Quản Lý Kho Hàng")
     root.geometry("1100x700")
     
     # [Q6] Cấu hình trọng số để các thành phần tự động co giãn theo cửa sổ

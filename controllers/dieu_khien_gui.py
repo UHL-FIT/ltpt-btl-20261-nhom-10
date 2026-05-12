@@ -171,9 +171,9 @@ def khoi_tao_dieu_khien(widgets):
         """Hiển thị thông tin giới thiệu về phần mềm."""
         messagebox.showinfo("Giới Thiệu PyWarehouse", 
                           "PyWarehouse v1.0.0\n"
-                          "Phần mềm quản lý kho hàng chuẩn kiến trúc MVC.\n"
+                          "Phần mềm quản lý kho hàng.\n"
                           "Sử dụng: Pandas, Numpy, Tkinter.\n"
-                          "Nhóm 2 (TT02A) - ĐH Hạ Long.")
+                          "Nhóm 10 (TT02A) - ĐH Hạ Long.")
 
     # Gán các hàm xử lý sự kiện vào các nút bấm tương ứng
     widgets["btn_them"].config(command=hanh_dong_them)
