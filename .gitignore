@@ -9,3 +9,4 @@ dist/
 .vscode/
 DOCS_REQUIREMENT.md
 DOCS_REFERENCE.md
+Context.md

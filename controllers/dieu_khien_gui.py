@@ -16,6 +16,29 @@ def khoi_tao_dieu_khien(widgets):
     tree = widgets["tree"]
     root = widgets["root"]
 
+    def sap_xep_cot(col, reverse):
+        """
+        Sắp xếp dữ liệu trong bảng khi nhấn vào tiêu đề cột.
+        Hỗ trợ sắp xếp cả chuỗi văn bản và con số.
+        """
+        # Lấy toàn bộ dữ liệu trong cột
+        l = [(tree.set(k, col), k) for k in tree.get_children('')]
+        
+        try:
+            # Thử chuyển đổi sang số để sắp xếp theo giá trị (giá tiền, số lượng)
+            # Loại bỏ dấu phẩy ngăn cách hàng nghìn trước khi chuyển đổi
+            l.sort(key=lambda t: float(str(t[0]).replace(',', '')), reverse=reverse)
+        except ValueError:
+            # Nếu không phải số (ví dụ: tên SP, mã SKU) thì sắp xếp theo chuỗi
+            l.sort(reverse=reverse)
+
+        # Sắp xếp lại các dòng trên giao diện
+        for index, (val, k) in enumerate(l):
+            tree.move(k, '', index)
+
+        # Đổi chiều sắp xếp cho lần nhấn tiếp theo
+        tree.heading(col, command=lambda: sap_xep_cot(col, not reverse))
+
     def lam_moi_bang(query=""):
         """
         Xóa dữ liệu cũ trên bảng Treeview và nạp lại dữ liệu mới nhất từ Model.
@@ -55,9 +78,9 @@ def khoi_tao_dieu_khien(widgets):
     def cap_nhat_dashboard():
         """Cập nhật các con số thống kê tổng quát trên thanh trạng thái."""
         tk = model.thong_ke_kho()
-        widgets["lbl_tong_hang"].config(text=f"Mặt hàng: {tk['tong_mat_hang']}")
-        widgets["lbl_tong_von"].config(text=f"Vốn: {tk['tong_gia_tri_kho']:,} VNĐ")
-        widgets["lbl_can_nhap"].config(text=f"Cần nhập: {tk['can_nhap_hang']}")
+        widgets["lbl_tong_hang"].configure(text=f"Mặt hàng: {tk['tong_mat_hang']}")
+        widgets["lbl_tong_von"].configure(text=f"Vốn: {tk['tong_gia_tri_kho']:,} VNĐ")
+        widgets["lbl_can_nhap"].configure(text=f"Cần nhập: {tk['can_nhap_hang']}")
 
     # ─── XỬ LÝ SỰ KIỆN: THÊM SẢN PHẨM ────────────────────────────────
     def hanh_dong_them():
@@ -86,13 +109,13 @@ def khoi_tao_dieu_khien(widgets):
                 if ok:
                     messagebox.showinfo("Thành công", msg)
                     form["window"].destroy()
-                    lam_moi_bang() # Tải lại bảng để thấy kết quả mới
+                    lam_moi_bang(query=widgets["entry_tim_kiem"].get())
                 else:
                     messagebox.showerror("Lỗi", msg)
             except ValueError:
                 messagebox.showerror("Lỗi", "Số lượng và Giá phải nhập bằng con số!")
                 
-        form["btn_luu"].config(command=luu)
+        form["btn_luu"].configure(command=luu)
 
     # ─── XỬ LÝ SỰ KIỆN: SỬA SẢN PHẨM ─────────────────────────────────
     def hanh_dong_sua():
@@ -128,13 +151,13 @@ def khoi_tao_dieu_khien(widgets):
                 if ok:
                     messagebox.showinfo("Xong", msg)
                     form["window"].destroy()
-                    lam_moi_bang()
+                    lam_moi_bang(query=widgets["entry_tim_kiem"].get())
                 else:
                     messagebox.showerror("Lỗi", msg)
             except ValueError:
                 messagebox.showerror("Lỗi", "Dữ liệu con số không hợp lệ!")
                 
-        form["btn_luu"].config(command=luu)
+        form["btn_luu"].configure(command=luu)
 
     # ─── XỬ LÝ FILE: IMPORT / EXPORT (SỬ DỤNG THREADING) ─────────────
     def hanh_dong_import():
@@ -146,7 +169,7 @@ def khoi_tao_dieu_khien(widgets):
         def worker():
             ok, msg = model.import_csv(file_path)
             # Sau khi xong, dùng root.after để cập nhật giao diện từ luồng chính (Main Thread)
-            root.after(0, lambda: [messagebox.showinfo("Kết quả", msg), lam_moi_bang()])
+            root.after(0, lambda: [messagebox.showinfo("Kết quả", msg), lam_moi_bang(query=widgets["entry_tim_kiem"].get())])
         
         threading.Thread(target=worker, daemon=True).start()
 
@@ -165,26 +188,30 @@ def khoi_tao_dieu_khien(widgets):
         if messagebox.askyesno("Xác nhận", f"Bạn có chắc muốn xóa {len(sel)} sản phẩm?"):
             skus = [tree.item(i)['values'][0] for i in sel]
             model.xoa_san_pham(skus)
-            lam_moi_bang()
+            lam_moi_bang(query=widgets["entry_tim_kiem"].get())
 
     def hanh_dong_about():
         """Hiển thị thông tin giới thiệu về phần mềm."""
         messagebox.showinfo("Giới Thiệu PyWarehouse", 
-                          "PyWarehouse v1.0.0\n"
+                          "PyWarehouse v1.1.0\n"
                           "Phần mềm quản lý kho hàng.\n"
                           "Sử dụng: Pandas, Numpy, Tkinter.\n"
                           "Nhóm 10 (TT02A) - ĐH Hạ Long.")
 
     # Gán các hàm xử lý sự kiện vào các nút bấm tương ứng
-    widgets["btn_them"].config(command=hanh_dong_them)
-    widgets["btn_sua"].config(command=hanh_dong_sua)
-    widgets["btn_xoa"].config(command=hanh_dong_xoa)
-    widgets["btn_import"].config(command=hanh_dong_import)
-    widgets["btn_export"].config(command=hanh_dong_export)
-    widgets["btn_about"].config(command=hanh_dong_about)
+    widgets["btn_them"].configure(command=hanh_dong_them)
+    widgets["btn_sua"].configure(command=hanh_dong_sua)
+    widgets["btn_xoa"].configure(command=hanh_dong_xoa)
+    widgets["btn_import"].configure(command=hanh_dong_import)
+    widgets["btn_export"].configure(command=hanh_dong_export)
+    widgets["btn_about"].configure(command=hanh_dong_about)
     
+    # [NEW] Gắn sự kiện sắp xếp khi nhấn vào tiêu đề cột
+    for col in tree["columns"]:
+        tree.heading(col, command=lambda c=col: sap_xep_cot(c, False))
+
     # Lắng nghe sự kiện gõ phím để tìm kiếm tức thời
-    widgets["entry_tim_kiem"].bind("<KeyRelease>", lambda e: lam_moi_bang(widgets["entry_tim_kiem"].get()))
+    widgets["entry_tim_kiem"].bind("<KeyRelease>", lambda e: lam_moi_bang(e.widget.get()))
 
     # Tải dữ liệu lên bảng lần đầu khi ứng dụng khởi chạy
     lam_moi_bang()
