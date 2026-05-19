@@ -27,21 +27,9 @@ jobs:
         run: |
           python build.py
 
-      - name: Token
-        id: generate-token
-        uses: actions/create-github-app-token@v1
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
         with:
-          app-id: ${{ secrets.PWH_SK }}
-          private-key: ${{ secrets.PWH_SK_KEY }}
-
-      - name: Create GitHub Release
-        id: create_release
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: dist/PyWarehouse.exe # Đính kèm file exe đã build xong
-          name: Release ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }} # Tự động cấp quyền tạo Release
+          name: PyWarehouse-${{ github.ref_name }} # Tên tệp hiển thị trên GitHub
+          path: dist/PyWarehouse.exe # Đường dẫn tới file exe của bạn
+          retention-days: 90
