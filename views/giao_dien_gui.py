@@ -102,7 +102,7 @@ def tao_giao_dien_chinh(root):
     lbl_can_nhap.pack(side="left", padx=30, pady=15)
 
     # Nút chuyển đổi giao diện Sáng/Tối
-    btn_theme = ctk.CTkOptionMenu(status_bar, values=["Hệ thống", "Tối", "Sáng"], 
+    btn_theme = ctk.CTkOptionMenu(status_bar, values=["System", "Dark", "Light"], 
                                  command=lambda v: ctk.set_appearance_mode(v), width=100)
     btn_theme.pack(side="right", padx=20)
 
