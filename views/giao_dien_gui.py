@@ -19,7 +19,7 @@ def tao_giao_dien_chinh(root):
     Returns:
         dict: Chứa các tham chiếu tới các widget chính (nút, bảng, ô nhập liệu...).
     """
-    root.title("PyWarehouse - Quản Lý Kho Hàng - v1.1")
+    root.title("PyWarehouse - Quản Lý Kho Hàng - v1.1.3")
     root.geometry("1150x750")
     
     # [Q6] Cấu hình trọng số co giãn

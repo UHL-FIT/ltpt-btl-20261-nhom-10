@@ -13,8 +13,8 @@ import shutil
 TEN_APP = "PyWarehouse"
 FILE_MAIN = "main.py"
 THU_MUC_DATA = "data"
-THU_MUC_ASSETS = "assets"
-ICON_FILE = r"assets\app_icon.ico"
+# THU_MUC_ASSETS = "assets"
+# ICON_FILE = r"assets\app_icon.ico"
 
 
 def kiem_tra_pyinstaller():
@@ -23,7 +23,7 @@ def kiem_tra_pyinstaller():
         import PyInstaller
         print(f"  [OK] PyInstaller {PyInstaller.__version__}")
     except ImportError:
-        print("  [..] Installing PyInstaller...")
+        print("  [...] Installing PyInstaller...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "pyinstaller"])
 
 
@@ -35,7 +35,7 @@ def xoa_build_cu():
                 shutil.rmtree(folder)
             else:
                 os.remove(folder)
-            print(f"  [DEL] Đã xóa: {folder}")
+            print(f"  [DEL] Deleted: {folder}")
 
 
 def build():
@@ -61,15 +61,15 @@ def build():
         "--clean",              # Xóa cache cũ
         # Đưa các thư mục cần thiết vào bundle
         "--add-data", f"{THU_MUC_DATA};{THU_MUC_DATA}",
-        "--add-data", f"{THU_MUC_ASSETS};{THU_MUC_ASSETS}",
+        # "--add-data", f"{THU_MUC_ASSETS};{THU_MUC_ASSETS}",
         # Đảm bảo các thư viện này được nhận diện
         "--hidden-import", "pandas",
         "--hidden-import", "numpy",
     ]
 
     # Thêm icon nếu tồn tại
-    if ICON_FILE and os.path.exists(ICON_FILE):
-        cmd.extend(["--icon", ICON_FILE])
+    # if ICON_FILE and os.path.exists(ICON_FILE):
+    #     cmd.extend(["--icon", ICON_FILE])
 
     cmd.append(FILE_MAIN)
 
