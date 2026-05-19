@@ -41,15 +41,15 @@ def xoa_build_cu():
 def build():
     """Chạy PyInstaller để đóng gói thành file .exe duy nhất."""
     print("\n" + "=" * 50)
-    print(f"  ĐÔNG GÓI ỨNG DỤNG {TEN_APP.upper()}")
+    print(f"  Packaging {TEN_APP.upper()}")
     print("=" * 50)
 
     kiem_tra_pyinstaller()
 
-    print("\n  [1/3] Dọn dẹp bản build cũ...")
+    print("\n  [1/3] Clean up old builds...")
     xoa_build_cu()
 
-    print(f"\n  [2/3] Đang đóng gói {FILE_MAIN} -> {TEN_APP}.exe...")
+    print(f"\n  [2/3] Packaging {FILE_MAIN} to {TEN_APP}.exe...")
 
     # Cấu hình lệnh chạy PyInstaller
     cmd = [
@@ -80,13 +80,13 @@ def build():
         exe_path = os.path.join("dist", f"{TEN_APP}.exe")
         size_mb = os.path.getsize(exe_path) / (1024 * 1024)
         print("\n" + "=" * 50)
-        print("  [OK] ĐÓNG GÓI THÀNH CÔNG!")
+        print("  [OK] Packaging successful!")
         print(f"  File: {os.path.abspath(exe_path)}")
-        print(f"  Dung lượng: {size_mb:.1f} MB")
+        print(f"  Size: {size_mb:.1f} MB")
         print("=" * 50)
         return True
     else:
-        print("\n  [FAIL] Đóng gói thất bại!")
+        print("\n  [FAIL] Packaging failed!")
         return False
 
 
