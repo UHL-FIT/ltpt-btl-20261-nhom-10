@@ -27,6 +27,13 @@ jobs:
         run: |
           python build.py
 
+      - name: Token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.PWH_SK }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v2
@@ -37,4 +44,4 @@ jobs:
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }} # Tự động cấp quyền tạo Release
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }} # Tự động cấp quyền tạo Release
