@@ -21,9 +21,9 @@ def kiem_tra_pyinstaller():
     """Kiểm tra và cài đặt PyInstaller nếu cần."""
     try:
         import PyInstaller
-        print(f"  [OK] PyInstaller {PyInstaller.__version__} đã sẵn sàng")
+        print(f"  [OK] PyInstaller {PyInstaller.__version__}")
     except ImportError:
-        print("  [..] Đang cài đặt PyInstaller...")
+        print("  [..] Installing PyInstaller...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "pyinstaller"])
 
 
