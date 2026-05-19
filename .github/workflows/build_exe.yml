@@ -32,7 +32,7 @@ jobs:
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.PWH_SK }}
-          private-key: ${{ secrets.PWH_KEY }}
+          private-key: ${{ secrets.PWH_SK_KEY }}
 
       - name: Create GitHub Release
         id: create_release
