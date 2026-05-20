@@ -5,8 +5,7 @@ echo ========================================================
 
 if exist "build" rd /s /q "build"
 if exist "dist" rd /s /q "dist"
-if exist "SmartAttend.spec" del "SmartAttend.spec"
-if exist "Setup_SmartAttend.exe" del "Setup_SmartAttend.exe"
+if exist "PyWarehouse.spec" del "PyWarehouse.spec"
 
 echo Xoa cac thu muc __pycache__ va file .pyc...
 for /d /r . %%d in (__pycache__) do @if exist "%%d" rd /s /q "%%d"

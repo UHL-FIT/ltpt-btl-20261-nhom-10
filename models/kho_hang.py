@@ -2,7 +2,6 @@ import os
 import sys
 import pandas as pd
 import numpy as np
-import threading
 from utils.logger import setup_logger
 
 # Khởi tạo logger để ghi lại các hoạt động của chương trình

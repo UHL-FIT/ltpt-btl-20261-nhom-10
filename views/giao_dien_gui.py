@@ -19,7 +19,7 @@ def tao_giao_dien_chinh(root):
     Returns:
         dict: Chứa các tham chiếu tới các widget chính (nút, bảng, ô nhập liệu...).
     """
-    root.title("PyWarehouse - Quản Lý Kho Hàng - v1.1.3")
+    root.title("PyWarehouse - Quản Lý Kho Hàng - v1.2.0")
     root.geometry("1150x750")
     
     # [Q6] Cấu hình trọng số co giãn
@@ -47,8 +47,20 @@ def tao_giao_dien_chinh(root):
     btn_export = ctk.CTkButton(toolbar, text="📤 Xuất CSV", fg_color="#f39c12", hover_color="#d35400", width=120, font=("Arial", 13, "bold"))
     btn_export.pack(side="left", padx=10, pady=10)
 
-    btn_about = ctk.CTkButton(toolbar, text="ℹ️ Giới Thiệu", fg_color="#95a5a6", hover_color="#7f8c8d", width=120, font=("Arial", 13, "bold"))
-    btn_about.pack(side="left", padx=10, pady=10)
+    # ─── BỘ LỌC DỮ LIỆU (FILTER DROPDOWNS) ──────────────────
+    # Dropdown lọc theo phân loại sản phẩm (nội dung được cập nhật động từ Controller)
+    filter_loai = ctk.CTkOptionMenu(toolbar, values=["Tất cả"], width=140,
+                                     fg_color="#1abc9c", button_color="#16a085",
+                                     button_hover_color="#0e8c73",
+                                     font=("Arial", 12, "bold"))
+    filter_loai.pack(side="left", padx=5, pady=10)
+
+    # Dropdown lọc theo tình trạng tồn kho
+    filter_ton_kho = ctk.CTkOptionMenu(toolbar, values=["Tất cả", "Sắp hết hàng", "Còn hàng"], width=150,
+                                        fg_color="#1abc9c", button_color="#16a085",
+                                        button_hover_color="#0e8c73",
+                                        font=("Arial", 12, "bold"))
+    filter_ton_kho.pack(side="left", padx=5, pady=10)
 
     # Ô tìm kiếm hiện đại
     entry_tim_kiem = ctk.CTkEntry(toolbar, placeholder_text="🔍 Tìm mã SKU hoặc tên...", width=250, height=35)
@@ -101,17 +113,27 @@ def tao_giao_dien_chinh(root):
     lbl_can_nhap = ctk.CTkLabel(status_bar, text="Cần nhập: 0", font=("Arial", 14, "bold"), text_color="#e74c3c")
     lbl_can_nhap.pack(side="left", padx=30, pady=15)
 
-    # Nút chuyển đổi giao diện Sáng/Tối
-    btn_theme = ctk.CTkOptionMenu(status_bar, values=["System", "Dark", "Light"], 
-                                 command=lambda v: ctk.set_appearance_mode(v), width=100)
+    # Nút chuyển đổi giao diện Sáng/Tối (nhãn tiếng Việt)
+    # Ánh xạ tiếng Việt → giá trị CustomTkinter
+    def doi_giao_dien(lua_chon):
+        bang_doi = {"Hệ thống": "System", "Tối": "Dark", "Sáng": "Light"}
+        ctk.set_appearance_mode(bang_doi.get(lua_chon, "System"))
+
+    btn_theme = ctk.CTkOptionMenu(status_bar, values=["Hệ thống", "Tối", "Sáng"], 
+                                 command=doi_giao_dien, width=100)
     btn_theme.pack(side="right", padx=20)
 
-    # Trả về widgets (Tương thích 100% với Controller cũ)
+    # Nút Giới Thiệu — đặt ở thanh trạng thái, bên trái nút đổi giao diện
+    btn_about = ctk.CTkButton(status_bar, text="ℹ️ Giới Thiệu", fg_color="#95a5a6", hover_color="#7f8c8d", width=120, font=("Arial", 13, "bold"))
+    btn_about.pack(side="right", padx=10)
+
+    # Trả về widgets (bao gồm cả bộ lọc mới)
     return {
         "root": root, "tree": tree, "btn_them": btn_them, "btn_sua": btn_sua,
         "btn_xoa": btn_xoa, "btn_import": btn_import, "btn_export": btn_export,
         "btn_about": btn_about,
         "entry_tim_kiem": entry_tim_kiem,
+        "filter_loai": filter_loai, "filter_ton_kho": filter_ton_kho,
         "lbl_tong_hang": lbl_tong_hang, "lbl_tong_von": lbl_tong_von, "lbl_can_nhap": lbl_can_nhap
     }
 

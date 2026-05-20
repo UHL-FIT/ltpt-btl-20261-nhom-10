@@ -39,11 +39,24 @@ def khoi_tao_dieu_khien(widgets):
         # Đổi chiều sắp xếp cho lần nhấn tiếp theo
         tree.heading(col, command=lambda: sap_xep_cot(col, not reverse))
 
+    def cap_nhat_bo_loc():
+        """
+        Cập nhật danh sách giá trị cho dropdown lọc phân loại.
+
+        Lấy danh sách các loại sản phẩm hiện có từ DataFrame và cập nhật
+        vào CTkOptionMenu để người dùng luôn thấy các tùy chọn mới nhất.
+        """
+        df = model.lay_danh_sach()
+        # Lấy danh sách phân loại duy nhất, bỏ qua giá trị rỗng
+        danh_sach_loai = ["Tất cả"] + sorted(df["loai_san_pham"].dropna().unique().tolist())
+        widgets["filter_loai"].configure(values=danh_sach_loai)
+
     def lam_moi_bang(query=""):
         """
         Xóa dữ liệu cũ trên bảng Treeview và nạp lại dữ liệu mới nhất từ Model.
 
-        Hỗ trợ tính năng tìm kiếm và tự động thay đổi màu sắc dòng dựa trên số lượng tồn kho.
+        Hỗ trợ tính năng tìm kiếm, lọc theo phân loại và tình trạng tồn kho.
+        Ba bộ lọc hoạt động đồng thời (stacking): kết quả phải thỏa mãn cả ba điều kiện.
 
         Args:
             query (str, optional): Từ khóa để lọc sản phẩm theo mã SKU hoặc Tên.
@@ -59,6 +72,18 @@ def khoi_tao_dieu_khien(widgets):
         if query:
             df = df[df['ma_sku'].str.contains(query, case=False) | 
                     df['ten_san_pham'].str.contains(query, case=False)]
+        
+        # Lọc theo phân loại sản phẩm (từ dropdown)
+        loai_da_chon = widgets["filter_loai"].get()
+        if loai_da_chon != "Tất cả":
+            df = df[df['loai_san_pham'] == loai_da_chon]
+
+        # Lọc theo tình trạng tồn kho (từ dropdown)
+        ton_kho_da_chon = widgets["filter_ton_kho"].get()
+        if ton_kho_da_chon == "Sắp hết hàng":
+            df = df[df['so_luong'] < 10]
+        elif ton_kho_da_chon == "Còn hàng":
+            df = df[df['so_luong'] >= 10]
         
         # Duyệt qua từng sản phẩm và nạp vào bảng
         for _, row in df.iterrows():
@@ -109,6 +134,7 @@ def khoi_tao_dieu_khien(widgets):
                 if ok:
                     messagebox.showinfo("Thành công", msg)
                     form["window"].destroy()
+                    cap_nhat_bo_loc()
                     lam_moi_bang(query=widgets["entry_tim_kiem"].get())
                 else:
                     messagebox.showerror("Lỗi", msg)
@@ -151,6 +177,7 @@ def khoi_tao_dieu_khien(widgets):
                 if ok:
                     messagebox.showinfo("Xong", msg)
                     form["window"].destroy()
+                    cap_nhat_bo_loc()
                     lam_moi_bang(query=widgets["entry_tim_kiem"].get())
                 else:
                     messagebox.showerror("Lỗi", msg)
@@ -169,7 +196,7 @@ def khoi_tao_dieu_khien(widgets):
         def worker():
             ok, msg = model.import_csv(file_path)
             # Sau khi xong, dùng root.after để cập nhật giao diện từ luồng chính (Main Thread)
-            root.after(0, lambda: [messagebox.showinfo("Kết quả", msg), lam_moi_bang(query=widgets["entry_tim_kiem"].get())])
+            root.after(0, lambda: [messagebox.showinfo("Kết quả", msg), cap_nhat_bo_loc(), lam_moi_bang(query=widgets["entry_tim_kiem"].get())])
         
         threading.Thread(target=worker, daemon=True).start()
 
@@ -188,15 +215,21 @@ def khoi_tao_dieu_khien(widgets):
         if messagebox.askyesno("Xác nhận", f"Bạn có chắc muốn xóa {len(sel)} sản phẩm?"):
             skus = [tree.item(i)['values'][0] for i in sel]
             model.xoa_san_pham(skus)
+            cap_nhat_bo_loc()
             lam_moi_bang(query=widgets["entry_tim_kiem"].get())
 
     def hanh_dong_about():
         """Hiển thị thông tin giới thiệu về phần mềm."""
         messagebox.showinfo("Giới Thiệu PyWarehouse", 
-                          "PyWarehouse v1.1.0\n"
+                          "PyWarehouse v1.2.0\n"
                           "Phần mềm quản lý kho hàng.\n"
                           "Sử dụng: Pandas, Numpy, Tkinter.\n"
                           "Nhóm 10 (TT02A) - ĐH Hạ Long.")
+
+    # Hàm tiện ích để gọi lam_moi_bang khi dropdown thay đổi
+    def khi_bo_loc_thay_doi(_=None):
+        """Callback khi người dùng thay đổi giá trị bộ lọc dropdown."""
+        lam_moi_bang(query=widgets["entry_tim_kiem"].get())
 
     # Gán các hàm xử lý sự kiện vào các nút bấm tương ứng
     widgets["btn_them"].configure(command=hanh_dong_them)
@@ -205,6 +238,10 @@ def khoi_tao_dieu_khien(widgets):
     widgets["btn_import"].configure(command=hanh_dong_import)
     widgets["btn_export"].configure(command=hanh_dong_export)
     widgets["btn_about"].configure(command=hanh_dong_about)
+
+    # Gắn callback cho bộ lọc dropdown
+    widgets["filter_loai"].configure(command=khi_bo_loc_thay_doi)
+    widgets["filter_ton_kho"].configure(command=khi_bo_loc_thay_doi)
     
     # [NEW] Gắn sự kiện sắp xếp khi nhấn vào tiêu đề cột
     for col in tree["columns"]:
@@ -213,5 +250,6 @@ def khoi_tao_dieu_khien(widgets):
     # Lắng nghe sự kiện gõ phím để tìm kiếm tức thời
     widgets["entry_tim_kiem"].bind("<KeyRelease>", lambda e: lam_moi_bang(e.widget.get()))
 
-    # Tải dữ liệu lên bảng lần đầu khi ứng dụng khởi chạy
+    # Cập nhật danh sách phân loại và tải dữ liệu lần đầu
+    cap_nhat_bo_loc()
     lam_moi_bang()
