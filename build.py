@@ -60,7 +60,7 @@ def build():
         "--onefile",            # Đóng gói tất cả thành 1 file .exe duy nhất
         "--clean",              # Xóa cache cũ
         # Đưa các thư mục cần thiết vào bundle
-        "--add-data", f"{THU_MUC_DATA};{THU_MUC_DATA}",
+        # "--add-data", f"{THU_MUC_DATA};{THU_MUC_DATA}",
         # "--add-data", f"{THU_MUC_ASSETS};{THU_MUC_ASSETS}",
         # Đảm bảo các thư viện này được nhận diện
         "--hidden-import", "pandas",
