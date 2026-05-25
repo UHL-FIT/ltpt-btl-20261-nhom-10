@@ -13,7 +13,7 @@ Sử dụng **Semantic Versioning (SemVer)** `v[MAJOR].[MINOR].[PATCH]` để đ
 - **`MAJOR`**: Thay đổi cấu trúc dữ liệu hoặc luồng lớn khiến phiên bản cũ không còn tương thích (Ví dụ từ `v1.x` lên `v2.0.0`).
 - **`MINOR`**: Thêm tính năng mới (Ví dụ: Thêm cột giới tính, lọc theo danh sách).
 - **`PATCH`**: Vá lỗi (Bug fixes), chỉnh sửa UI nhỏ giọt.
-- Phiên bản hiện tại của app được đánh dấu toàn cục ở `__version__ = "1.0.0"` tại file entry point.
+- Phiên bản hiện tại của app được đánh dấu toàn cục ở `__version__ = "1.4.0"` tại file entry point.
 
 ## 3. Khối Chú thích (Docstrings)
 Mọi hàm, module bắt buộc phải có Docstring mô tả theo cấu trúc **Google Python Style Guide**:

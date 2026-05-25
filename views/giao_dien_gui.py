@@ -19,7 +19,7 @@ def tao_giao_dien_chinh(root):
     Returns:
         dict: Chứa các tham chiếu tới các widget chính (nút, bảng, ô nhập liệu...).
     """
-    root.title("PyWarehouse - Quản Lý Kho Hàng - v1.2.0")
+    root.title("PyWarehouse - Quản Lý Kho Hàng - v1.3.0")
     root.geometry("1150x750")
     
     # [Q6] Cấu hình trọng số co giãn
@@ -46,6 +46,9 @@ def tao_giao_dien_chinh(root):
 
     btn_export = ctk.CTkButton(toolbar, text="📤 Xuất CSV", fg_color="#f39c12", hover_color="#d35400", width=120, font=("Arial", 13, "bold"))
     btn_export.pack(side="left", padx=10, pady=10)
+
+    btn_bieu_do = ctk.CTkButton(toolbar, text="📊 Biểu Đồ", fg_color="#16a085", hover_color="#1abc9c", width=110, font=("Arial", 13, "bold"))
+    btn_bieu_do.pack(side="left", padx=10, pady=10)
 
     # ─── BỘ LỌC DỮ LIỆU (FILTER DROPDOWNS) ──────────────────
     # Dropdown lọc theo phân loại sản phẩm (nội dung được cập nhật động từ Controller)
@@ -131,11 +134,12 @@ def tao_giao_dien_chinh(root):
     return {
         "root": root, "tree": tree, "btn_them": btn_them, "btn_sua": btn_sua,
         "btn_xoa": btn_xoa, "btn_import": btn_import, "btn_export": btn_export,
-        "btn_about": btn_about,
+        "btn_bieu_do": btn_bieu_do, "btn_about": btn_about,
         "entry_tim_kiem": entry_tim_kiem,
         "filter_loai": filter_loai, "filter_ton_kho": filter_ton_kho,
         "lbl_tong_hang": lbl_tong_hang, "lbl_tong_von": lbl_tong_von, "lbl_can_nhap": lbl_can_nhap
     }
+
 
 def hien_thi_form_nhap_lieu(parent, tieu_de, data_cu=None):
     """
@@ -185,3 +189,62 @@ def hien_thi_form_nhap_lieu(parent, tieu_de, data_cu=None):
         "window": window, "btn_luu": btn_luu, "e_sku": e_sku, "e_ten": e_ten,
         "e_loai": e_loai, "e_sl": e_sl, "e_gn": e_gn, "e_gb": e_gb, "e_ng": e_ng
     }
+
+def hien_thi_bieu_do(parent, lay_du_lieu_fn):
+    """
+    Hiển thị cửa sổ phụ chứa biểu đồ phân tích dữ liệu kho hàng bằng Matplotlib.
+    Bố cục gồm 2 biểu đồ:
+    1. Biểu đồ cột: Top 5 sản phẩm tồn kho nhiều nhất.
+    2. Biểu đồ tròn: Cơ cấu chủng loại sản phẩm.
+    """
+    df = lay_du_lieu_fn()
+    if df.empty:
+        messagebox.showwarning("Cảnh báo", "Không có dữ liệu để vẽ biểu đồ!")
+        return
+
+    # Import matplotlib các module cần thiết
+    import matplotlib.pyplot as plt
+    from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+    # Tạo cửa sổ popup
+    window = ctk.CTkToplevel(parent)
+    window.title("Thống Kê Trực Quan Kho Hàng - v1.4.0")
+    window.geometry("950x650")
+    window.grab_set()
+
+    # Khung giao diện chính
+    frame = ctk.CTkFrame(window, corner_radius=15)
+    frame.pack(fill="both", expand=True, padx=20, pady=20)
+
+    # Tiêu đề
+    ctk.CTkLabel(frame, text="BIỂU ĐỒ PHÂN TÍCH KHO HÀNG", font=("Arial", 18, "bold")).pack(pady=10)
+
+    # Cấu hình phong cách hiển thị (sử dụng biểu đồ cột và tròn sạch sẽ)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 4.5), dpi=100)
+    fig.patch.set_facecolor('#EAEAEA')  # Màu nền đồng bộ
+
+    # 1. Vẽ biểu đồ 1: Top 5 tồn kho nhiều nhất
+    top5 = df.nlargest(5, 'so_luong')
+    ax1.bar(top5['ten_san_pham'].str.slice(0, 15) + '...', top5['so_luong'], color='#3498db', edgecolor='black')
+    ax1.set_title("Top 5 Sản Phẩm Tồn Kho", fontsize=11, fontweight='bold')
+    ax1.set_ylabel("Số lượng", fontsize=9)
+    ax1.tick_params(axis='x', rotation=30, labelsize=8)
+    ax1.grid(axis='y', linestyle='--', alpha=0.7)
+
+    # 2. Vẽ biểu đồ 2: Tỷ lệ loại sản phẩm
+    loai_counts = df['loai_san_pham'].value_counts()
+    ax2.pie(loai_counts, labels=loai_counts.index, autopct='%1.1f%%', startangle=90, 
+            colors=['#2ecc71', '#e67e22', '#9b59b6', '#f1c40f', '#e74c3c'])
+    ax2.set_title("Cơ Cấu Chủng Loại", fontsize=11, fontweight='bold')
+
+    plt.tight_layout()
+
+    # Nhúng biểu đồ vào Tkinter Canvas
+    canvas = FigureCanvasTkAgg(fig, master=frame)
+    canvas.draw()
+    canvas.get_tk_widget().pack(fill="both", expand=True, padx=10, pady=10)
+
+    # Nút đóng
+    btn_dong = ctk.CTkButton(frame, text="Đóng", command=window.destroy, width=120)
+    btn_dong.pack(pady=10)
+

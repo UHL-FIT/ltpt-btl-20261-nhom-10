@@ -12,15 +12,18 @@ class TestKhoHangModel(unittest.TestCase):
     def setUp(self):
         """
         Hàm thiết lập chạy trước mỗi bài test.
-        Chúng ta sẽ tạo một file CSV giả lập để không làm ảnh hưởng đến dữ liệu thật.
+        Chúng ta sẽ tạo một file Database giả lập để không làm ảnh hưởng đến dữ liệu thật.
         """
-        self.test_file = os.path.join(os.path.dirname(__file__), "test_kho_hang.csv")
+        self.test_file = os.path.join(os.path.dirname(__file__), "test_kho_hang.db")
         # Ghi đè đường dẫn file trong model bằng file test tạm thời
-        kho_hang.FILE_KHO = self.test_file
+        kho_hang.FILE_DB = self.test_file
+        kho_hang.FILE_CSV_BACKUP = self.test_file + ".csv"
         
         # Đảm bảo file test cũ bị xóa trước khi bắt đầu
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
+        if os.path.exists(kho_hang.FILE_CSV_BACKUP):
+            os.remove(kho_hang.FILE_CSV_BACKUP)
 
     def tearDown(self):
         """
@@ -29,14 +32,19 @@ class TestKhoHangModel(unittest.TestCase):
         """
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
+        if os.path.exists(kho_hang.FILE_CSV_BACKUP):
+            os.remove(kho_hang.FILE_CSV_BACKUP)
 
     def test_01_khoi_tao_csv(self):
-        """Kiểm tra việc tự động tạo file CSV mới khi chưa tồn tại."""
+        """Kiểm tra việc tự động tạo file Database mới khi chưa tồn tại."""
         kho_hang.khoi_tao_csv()
         self.assertTrue(os.path.exists(self.test_file))
         
-        # Kiểm tra xem các cột có đúng yêu cầu không
-        df = pd.read_csv(self.test_file)
+        # Kiểm tra xem các cột trong SQLite có đúng yêu cầu không
+        import sqlite3
+        conn = sqlite3.connect(self.test_file)
+        df = pd.read_sql_query("SELECT * FROM kho_hang", conn)
+        conn.close()
         cac_cot_mong_muon = ["ma_sku", "ten_san_pham", "loai_san_pham", "so_luong", "gia_nhap", "gia_ban", "ngay_nhap"]
         self.assertEqual(list(df.columns), cac_cot_mong_muon)
 

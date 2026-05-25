@@ -221,10 +221,14 @@ def khoi_tao_dieu_khien(widgets):
     def hanh_dong_about():
         """Hiển thị thông tin giới thiệu về phần mềm."""
         messagebox.showinfo("Giới Thiệu PyWarehouse", 
-                          "PyWarehouse v1.2.0\n"
+                          "PyWarehouse v1.3.0\n"
                           "Phần mềm quản lý kho hàng.\n"
-                          "Sử dụng: Pandas, Numpy, Tkinter.\n"
+                          "Sử dụng: Pandas, Numpy, Tkinter, SQLite, Flask, Matplotlib.\n"
                           "Nhóm 10 (TT02A) - ĐH Hạ Long.")
+
+    def hanh_dong_bieu_do():
+        """Hiển thị biểu đồ phân tích trực quan."""
+        view.hien_thi_bieu_do(root, model.lay_danh_sach)
 
     # Hàm tiện ích để gọi lam_moi_bang khi dropdown thay đổi
     def khi_bo_loc_thay_doi(_=None):
@@ -237,6 +241,7 @@ def khoi_tao_dieu_khien(widgets):
     widgets["btn_xoa"].configure(command=hanh_dong_xoa)
     widgets["btn_import"].configure(command=hanh_dong_import)
     widgets["btn_export"].configure(command=hanh_dong_export)
+    widgets["btn_bieu_do"].configure(command=hanh_dong_bieu_do)
     widgets["btn_about"].configure(command=hanh_dong_about)
 
     # Gắn callback cho bộ lọc dropdown
@@ -253,3 +258,13 @@ def khoi_tao_dieu_khien(widgets):
     # Cập nhật danh sách phân loại và tải dữ liệu lần đầu
     cap_nhat_bo_loc()
     lam_moi_bang()
+
+    # ─── KHỞI CHẠY REST API SERVER (THREAD PHỤ) ─────────────────────
+    try:
+        import api_server
+        api_thread = threading.Thread(target=api_server.run_server, daemon=True)
+        api_thread.start()
+        print("REST API server đang chạy tại: http://127.0.0.1:5000")
+    except Exception as e:
+        print(f"Không thể khởi động REST API server: {e}")
+

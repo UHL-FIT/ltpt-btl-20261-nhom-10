@@ -4,7 +4,8 @@ import views.giao_dien_gui as view
 import controllers.dieu_khien_gui as controller
 
 # Phiên bản của ứng dụng (Semantic Versioning)
-__version__ = "1.2.0"
+__version__ = "1.3.0"
+
 
 def main():
     """

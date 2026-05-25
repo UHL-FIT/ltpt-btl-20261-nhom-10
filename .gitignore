@@ -8,6 +8,4 @@ dist/
 .idea/
 .vscode/
 data/
-DOCS_REQUIREMENT.md
-DOCS_REFERENCE.md
-Context.md
+.antigravity/
