@@ -1,6 +1,6 @@
 # 📦PyWarehouse - Phần Mềm Quản Lý Kho Hàng (Kiến Trúc MVC + DB & API)
 
-![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Python](https://img.shields.io/badge/python-3.10+-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Pandas](https://img.shields.io/badge/Pandas-3.0.2-150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/numpy-2.4.4-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
 ![Windows](https://img.shields.io/badge/dành_cho-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
@@ -26,12 +26,6 @@ PyWarehouse/
 ├── controllers/             # Layer Controller: Điều phối luồng dữ liệu (dieu_khien_gui.py)
 ├── data/                    # Nơi lưu trữ cơ sở dữ liệu (kho_hang.db) và logs
 ├── docs/                    # Thư mục chứa tài liệu đặc tả môn học và dự án (.md)
-│   ├── CONVENTIONS.md       # Quy chuẩn viết mã và tài liệu
-│   ├── Context.md           # Tóm tắt cấu trúc và công nghệ sử dụng
-│   ├── DOCS_REFERENCE.md    # Tài liệu tham khảo thuyết trình (Q&A Mapping)
-│   ├── DOCS_REQUIREMENT.md  # Yêu cầu dự án từ môn học
-│   ├── SAD.md               # Tài liệu thiết kế kiến trúc phần mềm
-│   └── SRS.md               # Đặc tả yêu cầu hệ thống
 ├── models/                  # Layer Model: Xử lý logic nghiệp vụ và SQL (kho_hang.py)
 ├── templates/               # Mẫu file CSV để người dùng nhập liệu (mau_kho_hang.csv)
 ├── utils/                   # Tiện ích bổ trợ (logger.py)

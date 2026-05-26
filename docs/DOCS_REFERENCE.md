@@ -1,6 +1,6 @@
-# PyWarehouse - Tài Liệu Tham Khảo Thuyết Trình (Q&A Mapping) - v1.4.0 ("D D")
+# PyWarehouse - Tài Liệu Tham Khảo Thuyết Trình
 
-Tài liệu này giúp bạn trả lời nhanh các câu hỏi (Q1 - Q13) từ file yêu cầu dự án sau khi nâng cấp lên v1.4.0.
+Tài liệu này giúp bạn trả lời nhanh các câu hỏi (Q1 - Q13) từ file yêu cầu dự án.
 
 ---
 
@@ -23,7 +23,7 @@ Tài liệu này giúp bạn trả lời nhanh các câu hỏi (Q1 - Q13) từ f
 
 ---
 
-## 🔵 PHẦN 2: CÁC VỊ TRÍ LOGIC QUAN TRỌNG KHÁC (v1.4.0 Upgrade)
+## 🔵 PHẦN 2: CÁC VỊ TRÍ LOGIC QUAN TRỌNG KHÁC
 
 ### 1. MODEL (`models/kho_hang.py`)
 *   **Dòng 23**: Hàm `khoi_tao_csv()` tạo bảng SQLite và tự động import dữ liệu cũ từ file CSV sang DB nếu phát hiện.
