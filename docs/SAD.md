@@ -24,7 +24,7 @@ PyWarehouse áp dụng kiến trúc **MVC (Model-View-Controller)** kết hợp 
 4. **Model** cập nhật dữ liệu vào SQLite và trả về kết quả cho **Controller**.
 5. **Controller** yêu cầu **View** cập nhật lại bảng hiển thị và dashboard.
 
-## 3. Luồng lọc dữ liệu (v1.4)
+## 3. Luồng lọc dữ liệu (v1.3)
 1. Người dùng thay đổi dropdown **Phân loại** hoặc **Tồn kho**, hoặc gõ từ khóa tìm kiếm.
 2. **Controller** lấy toàn bộ dữ liệu từ **Model** (DataFrame từ SQLite).
 3. Áp dụng lần lượt 3 bộ lọc (stacking): Tìm kiếm → Phân loại → Tồn kho.

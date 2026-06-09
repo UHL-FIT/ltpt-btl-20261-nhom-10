@@ -1,10 +1,12 @@
-# 📦PyWarehouse - Phần Mềm Quản Lý Kho Hàng (Kiến Trúc MVC + DB & API)
+# 📦PyWarehouse - Phần Mềm Quản Lý Kho Hàng
 
 ![Python](https://img.shields.io/badge/python-3.10+-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Pandas](https://img.shields.io/badge/Pandas-3.0.2-150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/numpy-2.4.4-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
+![Flask](https://img.shields.io/badge/flask-latest-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-latest-%23ffffff.svg?style=for-the-badge&logo=Matplotlib&logoColor=black)
 ![Windows](https://img.shields.io/badge/dành_cho-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
-![Version](https://img.shields.io/badge/phiên_bản_hiện_tại-v1.3.0-7303fc?style=for-the-badge)
+![Version](https://img.shields.io/badge/phiên_bản_hiện_tại-v1.3.1-7303fc?style=for-the-badge)
 ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-green.svg?style=for-the-badge)
 #
 

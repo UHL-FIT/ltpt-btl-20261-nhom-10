@@ -1,6 +1,6 @@
 # PyWarehouse - Codebase Context Summary
 
-Tài liệu này tóm tắt toàn bộ cấu trúc và chức năng của dự án **PyWarehouse** tính đến phiên bản **v1.3.0** ("Database Docking").
+Tài liệu này tóm tắt toàn bộ cấu trúc và chức năng của dự án **PyWarehouse** tính đến phiên bản **v1.3.1** ("Database Docking").
 
 ---
 
