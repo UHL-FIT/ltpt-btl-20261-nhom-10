@@ -1,6 +1,6 @@
 # PyWarehouse - Codebase Context Summary
 
-Tài liệu này tóm tắt toàn bộ cấu trúc và chức năng của dự án **PyWarehouse** tính đến phiên bản **v1.4.0** ("D D").
+Tài liệu này tóm tắt toàn bộ cấu trúc và chức năng của dự án **PyWarehouse** tính đến phiên bản **v1.3.0** ("Database Docking").
 
 ---
 
@@ -73,5 +73,3 @@ Dự án áp dụng mô hình **Model-View-Controller** mở rộng thêm **REST
 *   **Đóng gói**: PyInstaller (tạo file .exe).
 *   **Kiểm thử**: Unittest.
 
----
-**Ghi chú**: Tài liệu cập nhật cho phiên bản v1.4.0 ("D D").
